@@ -11,11 +11,17 @@ class B{
     }
 }
 
-class C{
-    protected $b;
+interface CImp{
+   public function test(); 
+}
 
-    public function __construct(B $b){
+class C implements CImp{
+    protected $b;
+    private $logger;
+
+    public function __construct(B $b, LoggerInterface $logger){
         $this->b = $b;
+        $this->logger = $logger;
     }
 
     public function test(){
@@ -57,22 +63,40 @@ class Container{
         return $this->services[$id];
     }
 
-    public function add($id){
-        $this->definitions[$id] = new \ReflectionClass($id);
+    public function add($id, $class){
+        $this->definitions[$id] = new \ReflectionClass($class);
 
         return $this;
     }
 }
 
 $container = new Container;
-$container->add(A::class);
-$container->add(B::class);
-$container->add(C::class);
+$container->add('A', A::class);
+$container->add(B::class, B::class);
+$container->add(CImp::class, C::class);
 
 //....
 /**
  * @var C $c
+ 
+ 
+ class UserController{
+    public function __constructor(UserRepository $repository)
+     {
+     }
+ }
+ 
+ 
+ $container->get(UserController::class);
  */
-$c = $container->get(C::class);
+$c = $container->get(CImp::class);
 $c->test();
 
+class ServiceProvider extends AbstructServiceProvider{
+    public function register()
+    {
+        $this->container->add(
+            
+        );
+    }
+}
