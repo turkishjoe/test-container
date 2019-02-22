@@ -1,0 +1,13 @@
+{
+    "name": "prog12/test-container",
+    "authors": [
+        {
+            "name": "a.nikulin",
+            "email": "a.nikulin@devcaz.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": { "": "src/" }
+    }
+}
