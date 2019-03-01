@@ -3,6 +3,12 @@ include 'vendor/autoload.php';
 
 use Demo\A;
 
+class D{
+    public function __construct()
+    {
+    }
+}
+
 class B{
     protected $a;
 
@@ -17,9 +23,11 @@ interface CImp{
 
 class C implements CImp{
     protected $b;
+    protected $d;
 
-    public function __construct(B $b){
+    public function __construct(B $b, D $d){
         $this->b = $b;
+        $this->d = $d;
     }
 
     public function test(){
@@ -27,9 +35,6 @@ class C implements CImp{
     }
 }
 
-$a = new A();
-$b = new B($a);
-$c = new C($b);
 
 class Container{
     /**
@@ -77,5 +82,6 @@ $container = new Container;
 $container->add(A::class);
 $container->add(B::class);
 $container->add(C::class);
+$container->add(D::class);
 
 $c = $container->get(C::class);
