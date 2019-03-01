@@ -17,11 +17,9 @@ interface CImp{
 
 class C implements CImp{
     protected $b;
-    private $logger;
 
-    public function __construct(B $b, LoggerInterface $logger){
+    public function __construct(B $b){
         $this->b = $b;
-        $this->logger = $logger;
     }
 
     public function test(){
@@ -46,15 +44,20 @@ class Container{
         if(!isset($this->services[$id])){
            if(isset($this->definitions[$id])){
                $constructor = $this->definitions[$id]->getConstructor();
-               $params = $constructor->getParameters();
                $arguments = [];
+
+               if(!is_null($constructor)) {
+                   $params = $constructor->getParameters();
+               }else{
+                   $params = [];
+               }
 
                foreach ($params as $key => $param){
                   $name =  $param->getClass()->name;
                   $arguments[$key] = $this->get($name);
                }
 
-               $this->services[$id] = $this->definitions[$id]->newInstance($arguments);
+               $this->services[$id] = $this->definitions[$id]->newInstanceArgs($arguments);
            }else{
                throw new \InvalidArgumentException;
            }
@@ -63,40 +66,16 @@ class Container{
         return $this->services[$id];
     }
 
-    public function add($id, $class){
-        $this->definitions[$id] = new \ReflectionClass($class);
+    public function add($class){
+        $this->definitions[$class] = new \ReflectionClass($class);
 
         return $this;
     }
 }
 
 $container = new Container;
-$container->add('A', A::class);
-$container->add(B::class, B::class);
-$container->add(CImp::class, C::class);
+$container->add(A::class);
+$container->add(B::class);
+$container->add(C::class);
 
-//....
-/**
- * @var C $c
- 
- 
- class UserController{
-    public function __constructor(UserRepository $repository)
-     {
-     }
- }
- 
- 
- $container->get(UserController::class);
- */
-$c = $container->get(CImp::class);
-$c->test();
-
-class ServiceProvider extends AbstructServiceProvider{
-    public function register()
-    {
-        $this->container->add(
-            
-        );
-    }
-}
+$c = $container->get(C::class);
