@@ -13,14 +13,46 @@ namespace Http;
 class Request
 {
     private $uriParams;
+    private $post;
+    private $get;
 
-    public function addParam($paramName, $param){
+    public function __construct()
+    {
+        $this->get = $_GET;
+        $this->post = $_POST;
+    }
+
+    public function addParam($paramName, $param)
+    {
         $this->uriParams[$paramName] = $param;
 
         return $this;
     }
 
-    public function getParam($paramName){
-        return $this->uriParams[$paramName] ?? null;
+    /**
+     * TODO:
+     * @return mixed
+     */
+    public function getUriParams()
+    {
+        return $this->uriParams;
+    }
+
+    /**
+     * TODO:
+     * @return mixed
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * TODO:
+     * @return mixed
+     */
+    public function getGet()
+    {
+        return $this->get;
     }
 }

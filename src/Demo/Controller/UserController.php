@@ -41,6 +41,6 @@ class UserController extends BaseController implements ControllerInterface
 
 
     public function get(){
-        $this->getViewer()->render('user/get', ['id'=>$this->getRequest()->getParam('id')]);
+        $this->getViewer()->render('user/get', ['id'=>$this->getRequest()->getUriParams()->getParam('id')]);
     }
 }
