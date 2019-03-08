@@ -11,6 +11,9 @@ namespace Http\Router;
 
 
 use Exception\BaseException;
+use Http\ControllerInterface;
+use Http\Request;
+use View\ViewerInterface;
 
 class Router
 {
@@ -23,7 +26,7 @@ class Router
         $this->parser = $parser;
     }
 
-    public function callAction(Request $request){
+    public function callAction(Request $request, ViewerInterface $viewer){
 
         $uriParams = $this->parser->getUriParams();
         if(!isset($this->routes[$uriParams[0]])){
@@ -53,6 +56,7 @@ class Router
         $actionConfig = $parentActionConfig['actions'][$actionName] ?? null;
         $this->bindParams($actionConfig, $uriParams, $request);
         $controller->setRequest($request);
+        $controller->setViewer($viewer);
 
         return $controller->$actionName();
     }

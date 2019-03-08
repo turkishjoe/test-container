@@ -7,12 +7,15 @@
  * Time: 17:19
  */
 
-namespace Http\Router;
+namespace Http;
 
+
+use View\ViewerInterface;
 
 class BaseController implements ControllerInterface
 {
     private $request;
+    private $viewer;
 
     /**
      * TODO:
@@ -33,5 +36,26 @@ class BaseController implements ControllerInterface
     public function getRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * TODO:
+     * @param ViewerInterface $viewer
+     * @return mixed
+     */
+    public function setViewer(ViewerInterface $viewer)
+    {
+        $this->viewer = $viewer;
+
+        return $this;
+    }
+
+    /**
+     * TODO:
+     * @return ViewerInterface
+     */
+    public function getViewer()
+    {
+        return $this->viewer;
     }
 }

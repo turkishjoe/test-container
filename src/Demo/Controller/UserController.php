@@ -10,22 +10,22 @@
 namespace Demo\Controller;
 
 
-use Http\Router\BaseController;
-use Http\Router\ControllerInterface;
-use Http\Router\Request;
+use Http\BaseController;
+use Http\ControllerInterface;
+use Http\Request;
 
 class UserController extends BaseController implements ControllerInterface
 {
     public function create(){
-        echo 'create' . PHP_EOL;
+        $this->getViewer()->render('user/create', []);
     }
 
     public function main(){
-        echo 'main' . PHP_EOL;
+        $this->getViewer()->render('user/main', []);
     }
 
 
     public function get(){
-        echo 'get user ' . $this->getRequest()->getParam('id') . PHP_EOL;
+        $this->getViewer()->render('user/get', ['id'=>$this->getRequest()->getParam('id')]);
     }
 }

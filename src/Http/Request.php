@@ -7,7 +7,7 @@
  * Time: 17:08
  */
 
-namespace Http\Router;
+namespace Http;
 
 
 class Request

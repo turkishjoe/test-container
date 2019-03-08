@@ -7,8 +7,10 @@
  * Time: 17:15
  */
 
-namespace Http\Router;
+namespace Http;
 
+
+use View\ViewerInterface;
 
 interface ControllerInterface
 {
@@ -18,4 +20,11 @@ interface ControllerInterface
      * @return mixed
      */
     public function setRequest(Request $request);
+
+    /**
+     * TODO:
+     * @param ViewerInterface $viewer
+     * @return mixed
+     */
+    public function setViewer(ViewerInterface $viewer);
 }
