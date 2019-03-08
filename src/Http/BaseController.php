@@ -16,6 +16,7 @@ class BaseController implements ControllerInterface
 {
     private $request;
     private $viewer;
+    private $pdo;
 
     /**
      * TODO:
@@ -58,4 +59,15 @@ class BaseController implements ControllerInterface
     {
         return $this->viewer;
     }
+
+    public function setPdo($pdo){
+        $this->pdo = $pdo;
+
+        return $this;
+    }
+
+    public function getPdo(){
+        return $this->pdo;
+    }
+
 }

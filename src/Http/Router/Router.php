@@ -26,7 +26,7 @@ class Router
         $this->parser = $parser;
     }
 
-    public function callAction(Request $request, ViewerInterface $viewer){
+    public function callAction(Request $request, ViewerInterface $viewer, \PDO $pdo){
 
         $uriParams = $this->parser->getUriParams();
         if(!isset($this->routes[$uriParams[0]])){
@@ -57,6 +57,7 @@ class Router
         $this->bindParams($actionConfig, $uriParams, $request);
         $controller->setRequest($request);
         $controller->setViewer($viewer);
+        $controller->initRepository($pdo);
 
         return $controller->$actionName();
     }

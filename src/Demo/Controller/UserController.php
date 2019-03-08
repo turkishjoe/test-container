@@ -10,18 +10,33 @@
 namespace Demo\Controller;
 
 
+use Demo\Model\UserRepository;
 use Http\BaseController;
 use Http\ControllerInterface;
 use Http\Request;
+use Model\BaseRepository;
 
 class UserController extends BaseController implements ControllerInterface
 {
+    /**
+     * @var BaseRepository
+     */
+    private $repository;
+
+    public function initRepository($pdo)
+    {
+        parent::setPdo($pdo);
+        $this->repository = new UserRepository($pdo);
+    }
+
     public function create(){
         $this->getViewer()->render('user/create', []);
     }
 
     public function main(){
-        $this->getViewer()->render('user/main', []);
+        $this->getViewer()->render('user/main', [
+            'users'=>$this->repository->findAll()
+        ]);
     }
 
 

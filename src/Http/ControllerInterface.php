@@ -27,4 +27,11 @@ interface ControllerInterface
      * @return mixed
      */
     public function setViewer(ViewerInterface $viewer);
+
+    /**
+     * TODO:
+     * @param $pdo
+     * @return mixed
+     */
+    public function initRepository($pdo);
 }
